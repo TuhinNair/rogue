@@ -38,14 +38,17 @@ impl State {
 }
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
+        ctx.set_active_console(0);
         ctx.cls();
-        self.player.update(ctx, &self.map);
+        ctx.set_active_console(1);
+        ctx.cls();
+        self.player.update(ctx, &self.map, &mut self.camera);
         self.map.render(ctx, &self.camera);
-        self.player.render(ctx);
+        self.player.render(ctx, &self.camera);
     }
 }
 fn main() -> BError {
-    let context = BTermBuilder::simple80x50()
+    let context = BTermBuilder::new()
         .with_title("Rogue")
         .with_fps_cap(30.0)
         .with_dimensions(DISPLAY_WIDTH, DISPLAY_HEIGHT)
