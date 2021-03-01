@@ -1,4 +1,3 @@
-#![warn(clippy::all, clippy::pedantic)]
 use crate::prelude::*;
 
 #[derive(Clone, Copy)]
