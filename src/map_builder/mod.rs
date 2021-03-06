@@ -2,12 +2,14 @@ use crate::prelude::*;
 use automata::CellularAutomataArchitect;
 use drunkard::DrunkardsWalkArchitect;
 use empty::EmptyArchitect;
+use prefab::*;
 use rooms::RoomsArchitect;
 const NUM_ROOMS: usize = 20;
 
 mod automata;
 mod drunkard;
 mod empty;
+mod prefab;
 mod rooms;
 trait MapArchitect {
     fn new(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder;
@@ -29,6 +31,7 @@ impl MapBuilder {
             _ => Box::new(CellularAutomataArchitect {}),
         };
         let mut mb = architect.new(rng);
+        apply_prefab(&mut mb, rng);
         mb
     }
 
